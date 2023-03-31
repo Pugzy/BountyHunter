@@ -2,7 +2,9 @@
 
 # if bounties are enabled
 enable: true
-debug: true
+
+# if fake raindrops are needed
+debug: false
 
 # Criteria for selecting a target
 selection:

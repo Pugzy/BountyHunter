@@ -15,6 +15,6 @@ public class Commands extends BaseCommand {
     Main.get().reloadConfig();
     Config.create(Main.get().getConfig());
     Main.get().getManager().reload();
-    sender.sendMessage("done");
+    sender.sendMessage("Bounty config has been reloaded.");
   }
 }

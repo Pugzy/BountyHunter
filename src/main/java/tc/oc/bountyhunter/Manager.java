@@ -19,8 +19,6 @@ import tc.oc.pgm.events.PlayerParticipationStopEvent;
 
 public class Manager implements Listener {
 
-  // TODO: track kills as bounty? announce on bounty end
-
   private Match match;
   private @Nullable BountyRunner bountyRunner;
   private @Nullable SelectionRunner selectionRunner;
