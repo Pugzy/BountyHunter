@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Random;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.title.Title;
 import tc.oc.pgm.api.player.MatchPlayer;
 import tc.oc.pgm.util.named.NameStyle;
@@ -24,7 +25,7 @@ public class Messages {
 
   public static Title bountyTitle() {
     return title(
-        text("Hunted", NamedTextColor.RED),
+        text("Hunted", NamedTextColor.RED, TextDecoration.BOLD),
         text("You are the bounty target", NamedTextColor.YELLOW),
         Title.Times.of(fromTicks(20), fromTicks(60), fromTicks(20)));
   }

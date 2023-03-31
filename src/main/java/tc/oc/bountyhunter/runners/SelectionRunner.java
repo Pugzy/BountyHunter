@@ -18,6 +18,7 @@ import tc.oc.bountyhunter.Messages;
 import tc.oc.bountyhunter.Utils;
 import tc.oc.pgm.api.match.Match;
 import tc.oc.pgm.api.player.MatchPlayer;
+import tc.oc.pgm.blitz.BlitzMatchModule;
 import tc.oc.pgm.stats.PlayerStats;
 import tc.oc.pgm.stats.StatsMatchModule;
 
@@ -56,12 +57,15 @@ public class SelectionRunner implements Runnable {
 
     if (!Config.get().getEnabled()) return null;
 
-    // Nobody playing.. interesting.
-    Collection<MatchPlayer> participants = this.match.getParticipants();
-    if (participants.isEmpty()) return null;
+    // Don't select a target when the match is Blitz
+    if (match.hasModule(BlitzMatchModule.class)) return null;
 
     StatsMatchModule stats = this.match.getModule(StatsMatchModule.class);
     if (stats == null) return null;
+
+    // Nobody playing.. interesting.
+    Collection<MatchPlayer> participants = this.match.getParticipants();
+    if (participants.isEmpty()) return null;
 
     // Find all players that pass the criteria
     boolean allowDuplicate = Config.get().isAllowDuplicate();
@@ -76,20 +80,14 @@ public class SelectionRunner implements Runnable {
                 })
             .collect(Collectors.toList());
 
-    // TODO: prevent getting same bounty getTarget() twice (config option)
-
     // No valid players found check again later
     if (validPlayers.isEmpty()) {
       return null;
     }
 
-    // TODO: select from the top kill streaking players?
-    // TODO: Fallback if no kill streaking players? use kills?
-
     Random random = new Random();
     MatchPlayer player = validPlayers.get(random.nextInt(validPlayers.size()));
 
-    // TODO: Send to everyone except getTarget()?
     player.showTitle(Messages.bountyTitle());
     this.match.sendMessage(Messages.bountySelected(player));
     this.match.playSound(sound(key("mob.horse.donkey.death"), Sound.Source.MASTER, 1f, 0.8f));
