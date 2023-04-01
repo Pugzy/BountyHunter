@@ -115,7 +115,9 @@ public class Manager implements Listener {
       return;
     }
 
-    bountyRunner.logKill();
+    if (target.equals(killer)) {
+      bountyRunner.logKill();
+    }
   }
 
   @EventHandler
